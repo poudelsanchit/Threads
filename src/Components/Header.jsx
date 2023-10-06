@@ -8,21 +8,30 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { IoCreateOutline } from 'react-icons/io5'
 import { CgMenuRight } from 'react-icons/cg'
 import { NavLink } from 'react-router-dom'
-
-
-
-
-
-
 const Header = () => {
     const [isActive, setIsActive] = useState(false);
-
-    useEffect(() => {
+    const [theme,setTheme]= useState(localStorage.getItem("theme")?localStorage.getItem("theme"):'light');
+    const handleTheme=()=>{
+        if(theme=== 'light')
+        {
+            setTheme('dark');
+        }
+        else{
+            setTheme('light');
+            const html= document.querySelector('html');
+            html.classList.remove('dark');
+        }
+    }
+    
+    useEffect(()=>{
+        console.log(theme)
+        localStorage.setItem('theme',theme);
+        const localTheme= localStorage.getItem('theme');
         const html = document.querySelector('html');
-        html.classList.add('dark');
-    }, [])
+        html.classList.add(localTheme)
+      },[theme])
     return (
-        <div className='h-[74px] w-full  top-0 sticky flex justify-center bg-dark bg-opacity-[0.999]'>
+        <div className='h-[74px] w-full  top-0 sticky flex justify-center dark:bg-dark bg-white bg-opacity-[0.999]'>
             <div className='flex justify-evenly h-full w-3/4 items-center'>
                 <div className='flex items-start'>
                     <img src={LogoLight} alt="" className='h-8' />
@@ -58,7 +67,7 @@ const Header = () => {
                     <CgMenuRight />
                     {isActive ?
                     <div className=' h-24 text-light w-40 top-12 right-0 absolute rounded-md bg-[#201f1f] transition-all flex flex-col text-base transition-none'>
-                            <div className='h-full flex items-center p-3 hover:bg-[#000000] rounded-t-md'>Switch appearance</div>
+                            <div className='h-full flex items-center p-3 hover:bg-[#000000] rounded-t-md' onClick={handleTheme}>Switch appearance</div>
                             <div className='h-full flex items-center p-3 hover:bg-[#000000] rounded-b-md'>Log out</div>
 
                       </div>

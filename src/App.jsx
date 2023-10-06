@@ -14,7 +14,7 @@ function App() {
 
   return (
     <>
-      <div className='dark:bg-dark dark:text-light  bg-light text-dark w-full max-h-max '>
+      <div className='dark:bg-dark dark:text-light  bg-light text-dark w-full max-h-max min-h-screen '>
         <Header/>
         <Routes>
           <Route path='/' element={<Home />} />
