@@ -4,12 +4,12 @@ import { CgMoreO } from 'react-icons/cg'
 
 import Profile from '../assets/profile.jpg'
 import { Link } from 'react-router-dom'
-import Menu from '../Components/Menu'
-const MyProfile = () => {
+import Menu from './Menu'
+const UserHeader = () => {
     const [isMoreActive,setIsMoreActive]= useState(false);
     console.log(isMoreActive)
     return (
-        <div className='w-full flex flex-col items-center mt-8'>
+        <div className='w-full flex flex-col items-center mt-8 select-none'>
             <div className='w-5/12 '>
                 <div className='flex justify-end items-center'>
                     <div className='w-full '>
@@ -34,7 +34,7 @@ const MyProfile = () => {
                         <Link className='text-sm text-[#777777] hover:underline'>instagram.com</Link>
 
                     </div>
-                    <div className='w-full flex justify-end gap-3 relative  '>
+                    <div className='w-full flex justify-end gap-3 relative  z-0 '>
                         <BsInstagram className='text-4xl hover:bg-[#1e1e1e] p-2 rounded-md transition-all duration-600  ease-in-out cursor-pointer	 ' />
                         <CgMoreO  className='text-4xl hover:bg-[#1e1e1e] p-2 rounded-md transition-all duration-1000 	 cursor-pointer' onClick={()=>setIsMoreActive(prev=>!prev)}/>
                       {isMoreActive?
@@ -79,4 +79,4 @@ const MyProfile = () => {
     )
 }
 
-export default MyProfile
+export default UserHeader

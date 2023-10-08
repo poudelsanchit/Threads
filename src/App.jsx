@@ -6,7 +6,6 @@ import PostPage from './Pages/PostPage'
 import Header from './Components/Header'
 import SearchPage from './Pages/SearchPage'
 import NotificationsPage from './Pages/NotificationsPage'
-import MyProfile from './Pages/MyProfile'
 import CreateThread from './Components/CreateThread'
 import Home from './Pages/Home'
 
@@ -22,7 +21,7 @@ function App() {
           <Route path='/createthread' element={<CreateThread />} />
 
           <Route path='/notifications' element={<NotificationsPage />} />
-          <Route path='/myprofile' element={<MyProfile />} />
+          <Route path='/myprofile' element={<UserPage />} />
           <Route path='/:username' element={<UserPage />} />
           <Route path='/:username/post/:pid' element={<PostPage />} />
         </Routes>

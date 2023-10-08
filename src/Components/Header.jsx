@@ -31,7 +31,7 @@ const Header = () => {
         html.classList.add(localTheme)
       },[theme])
     return (
-        <div className='h-[74px] w-full  top-0 sticky flex justify-center dark:bg-dark bg-white bg-opacity-[0.999]'>
+        <div className='h-[74px] w-full  top-0 sticky flex justify-center dark:bg-dark bg-white bg-opacity-[0.999] z-10'>
             <div className='flex justify-evenly h-full w-3/4 items-center'>
                 <div className='flex items-start'>
                     <img src={LogoLight} alt="" className='h-8' />
