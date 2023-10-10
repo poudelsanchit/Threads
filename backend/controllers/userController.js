@@ -4,7 +4,7 @@ import generateTokenAndCookie from "../utils/helpers/generateTokenAndSetCookie.j
 const signupUser = async (req, res) => {
     try {
         const { name, email, username, password } = req.body;
-		const user = await User.findOne({ $or: [{ email }, { username }] });
+        const user = await User.findOne({ $or: [{ email }, { username }] });
         if (user) {
             return res.status(400).json({ message: "User already exists" });
         }
@@ -15,19 +15,18 @@ const signupUser = async (req, res) => {
             name, email, username, password: hashedPassowrd
         })
         await newUser.save();
-        if(newUser)
-        {
-            generateTokenAndCookie(newUser._id,res);
+        if (newUser) {
+            generateTokenAndCookie(newUser._id, res);
             res.status(201).json({
                 _id: newUser._id,
-                name:newUser.name,
+                name: newUser.name,
                 email: newUser.email,
                 username: newUser.username,
             })
         }
-        else{
-            res.status(400).json({message:"Invalid user data"})
-        } 
+        else {
+            res.status(400).json({ message: "Invalid user data" })
+        }
     } catch (err) {
         res.status(500).json({ message: err.message });
         console.log("Error in signupUser: ", err.message)
@@ -35,4 +34,26 @@ const signupUser = async (req, res) => {
 
 }
 
-export { signupUser };
+const loginUser = async (req, res) => {
+    try {
+		const { username, password } = req.body;
+		const user = await User.findOne({ username });
+        const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
+
+		if (!user || !isPasswordCorrect) return res.status(400).json({ message: "Invalid username or password" });
+        generateTokenAndCookie(user._id, res);
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            username: user.username,
+
+        })
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+        console.log("Error in loginUser:", err.message)
+
+    }
+}
+
+export { signupUser, loginUser };

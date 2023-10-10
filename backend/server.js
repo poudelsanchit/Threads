@@ -8,11 +8,7 @@ dotenv.config();
 
 connectDB();
 const app = express();
-app.use(cors({
-    origin:['https://threadweave.vercel.app/'],
-    methods:['POST','GET'],
-    credentials: true
-}))
+
 
 const PORT = process.env.PORT || 5000;
 
