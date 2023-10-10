@@ -12,7 +12,7 @@ import { FiMoreHorizontal, FiSend } from 'react-icons/fi'
 import { FaRetweet } from 'react-icons/fa6'
 
 FaRetweet
-const UserPost = ({likes,commentCount,postTitle,image}) => {
+const UserPost = ({likes,commentCount,postTitle,image,userName,avatar}) => {
     const [isLiked, setIsLiked] = useState(false);
 
     const followUser = (event) => {
@@ -23,18 +23,18 @@ const UserPost = ({likes,commentCount,postTitle,image}) => {
     return (
         <Link to={'/poudelsanchit/post/23'}>
             <div className='w-full h-[42rem]  flex flex-col items-center mt-8 select-none'>
-                <div className='w-5/12 h-full flex flex-col border-b-[1px] border-secondary '>
+                <div className='sm:w-5/12 w-11/12 h-full flex flex-col border-b-[1px] border-secondary '>
                     <div className='w-full  h-14   flex  gap-4 '>
                         <div className='h-full flex items-center' >
                             <div className='relative h-10 w-10 flex '>
-                                <img src={Profile} alt="" className='h-10 w-10 rounded-full  bg-slate-600 object-contain' />
+                                <img src={avatar? avatar: Profile} alt="" className='h-10 w-10 rounded-full  bg-slate-600 object-cover' />
                                 <div className='absolute w-6 h-6 rounded-full bg-dark -bottom-1 -right-1  hover:scale-110 transition-all duration-300 cursor-pointer' onClick={followUser}>
                                     <AiFillPlusCircle className='text-2xl' />
                                 </div>
                             </div>
                         </div>
                         <div className='flex flex-col h-full'>
-                            <div className='font-sans font-bold flex items-start justify-start cursor-pointer' >poudelsanchit</div>
+                            <div className='font-sans font-bold flex items-start justify-start cursor-pointer' >{userName? userName: 'poudelsanchit'}</div>
                             <div className='text-sm h-auto'>{postTitle}</div>
                         </div>
                         <div className=' ml-auto flex items-start'>

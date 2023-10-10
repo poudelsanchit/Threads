@@ -32,13 +32,13 @@ const Header = () => {
       },[theme])
     return (
         <div className='h-[74px] w-full  top-0 sticky flex justify-center dark:bg-dark bg-white bg-opacity-[0.999] z-10'>
-            <div className='flex justify-evenly h-full w-3/4 items-center'>
+            <div className='flex justify-evenly h-full sm:w-3/4 w-11/12 items-center'>
                 <div className='flex items-start'>
                     <img src={LogoLight} alt="" className='h-8' />
 
                 </div>
-                <div className='flex w-4/5 h-full justify-center items-center '>
-                    <div className='flex w-2/3   items-center justify-evenly text-3xl  '>
+                <div className='flex sm:w-4/5 w-full h-full justify-center items-center '>
+                    <div className='sm:flex w-2/3   items-center justify-evenly text-3xl hidden  '>
                         <NavLink to={'/'} className={({ isActive }) => isActive ? 'text-light hover:bg-zinc-700 p-3 rounded-md transition-all duration-500' : ' text-gray-600 hover:bg-zinc-700 p-3 rounded-md transition-all duration-500'}
                         >
                             <GoHomeFill />

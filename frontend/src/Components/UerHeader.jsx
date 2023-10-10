@@ -6,7 +6,7 @@ import Profile from '../assets/profile.jpg'
 import { Link } from 'react-router-dom'
 import Menu from './Menu'
 const UserHeader = () => {
-    const [isMoreActive,setIsMoreActive]= useState(false);
+    const [isMoreActive, setIsMoreActive] = useState(false);
     console.log(isMoreActive)
     return (
         <div className='w-full flex flex-col items-center mt-8 select-none'>
@@ -34,36 +34,45 @@ const UserHeader = () => {
                         <Link className='text-sm text-[#777777] hover:underline'>instagram.com</Link>
 
                     </div>
-                    <div className='w-full flex justify-end gap-3 relative  z-0 '>
+                    <div className='w-full flex justify-end gap-3  z-0 '>
                         <BsInstagram className='text-4xl hover:bg-[#1e1e1e] p-2 rounded-md transition-all duration-600  ease-in-out cursor-pointer	 ' />
-                        <CgMoreO  className='text-4xl hover:bg-[#1e1e1e] p-2 rounded-md transition-all duration-1000 	 cursor-pointer' onClick={()=>setIsMoreActive(prev=>!prev)}/>
-                      {isMoreActive?
-                      <div onClick={()=>setIsMoreActive(prev=>!prev)} >  <Menu   Data={[
-                        {
-                            id: 1,
-                            name: 'Copy link'
-                        },
-                        
-                    ]} /></div>
-                    :null }  
+                        <div className='relative'>
+                            <CgMoreO className='text-4xl hover:bg-[#1e1e1e] p-2 rounded-md transition-all duration-1000 	 cursor-pointer' onClick={() => setIsMoreActive(prev => !prev)} />
+                            <div onClick={() => setIsMoreActive(prev => !prev)} >
+                                {isMoreActive ?
+                                    <Menu Data={[
+                                        {
+                                            id: 1,
+                                            name: 'Copy link'
+                                        },
+
+                                    ]} />
+                                    : null
+                                }
+
+                            </div>
+                        </div>
+
+
+
 
                     </div>
-                    
+
                 </div>
                 <div className='flex w-full  text-base font-semibold mt-6'>
-                    
+
                     <div className='w-full flex flex-col gap-4 '>
                         <div className='flex justify-center'>Threads</div>
                         <div className='h-[0.01rem] w-full bg-white'></div>
                     </div>
                     <div className='w-full flex flex-col gap-4 '>
-                    <div className='flex justify-center'>Replies</div>
+                        <div className='flex justify-center'>Replies</div>
 
                         <div className='h-[0.01rem] w-full bg-[#323333]'></div>
 
                     </div>
                     <div className='w-full flex flex-col gap-4 '>
-                    <div className='flex justify-center'>Reposts</div>
+                        <div className='flex justify-center'>Reposts</div>
 
                         <div className='h-[0.01rem] w-full bg-[#323333]'></div>
 
@@ -71,7 +80,7 @@ const UserHeader = () => {
                 </div>
             </div>
             <div>
-         
+
             </div>
 
         </div>
