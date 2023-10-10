@@ -12,7 +12,8 @@ export default {
       colors:{
         'dark' :'#101010',
         'light':'#ffffff',
-        'secondary':'#777777'
+        'secondary':'#777777',
+        'border':'#323333'
       }
     },
   },

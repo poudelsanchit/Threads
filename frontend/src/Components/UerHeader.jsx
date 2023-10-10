@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { BsInstagram } from 'react-icons/bs'
 import { CgMoreO } from 'react-icons/cg'
-
+import tom from '../assets/tom.png'
 import Profile from '../assets/profile.jpg'
 import { Link } from 'react-router-dom'
 import Menu from './Menu'
@@ -24,7 +24,7 @@ const UserHeader = () => {
 
                     </div>
                     <div className='w-full flex flex-col justify-center items-end gap-3'>
-                        <img src={Profile} alt="" className='h-[5.5rem] w-[5.5rem] rounded-full  bg-slate-600 object-contain' />
+                        <img src={tom} alt="" className='h-[5.5rem] w-[5.5rem] rounded-full  bg-slate-600 object-contain' />
                     </div>
                 </div>
                 <div className='flex justify-end items-center mt-3'>

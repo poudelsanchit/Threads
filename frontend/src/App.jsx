@@ -8,6 +8,7 @@ import SearchPage from './Pages/SearchPage'
 import NotificationsPage from './Pages/NotificationsPage'
 import CreateThread from './Components/CreateThread'
 import Home from './Pages/Home'
+import UserPost from './Components/UserPost'
 
 function App() {
 
