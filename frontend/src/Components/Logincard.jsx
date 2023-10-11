@@ -13,7 +13,7 @@ const LoginCard = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleSignUp = () => {
+    const handleLogin = async() => {
         if (email == '' && password == '') {
             toast('Please enter email address and password. ', {
                 style: { fontSize: '14px' },
@@ -26,6 +26,9 @@ const LoginCard = () => {
                 progress: undefined,
                 theme: "dark",
             });
+        }
+        else{
+            console.log('first')
         }
 
 
@@ -66,7 +69,7 @@ const LoginCard = () => {
                             {password == '' ? <div className='top-0 right-2 absolute text-red-500'>*</div> : null}
 
                         </div>
-                        <div className='select-none flex w-full bg-light text-dark rounded-md py-3 justify-center cursor-pointer active:scale-[.97] ' onClick={handleSignUp}>
+                        <div className='select-none flex w-full bg-light text-dark rounded-md py-3 justify-center cursor-pointer active:scale-[.97] ' onClick={handleLogin}>
                             Log in
                         </div>
                         <div className='text-secondary text-base font-normal cursor-pointer hover:underline'>Forgotten password?</div>
