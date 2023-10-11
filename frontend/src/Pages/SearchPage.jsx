@@ -1,9 +1,14 @@
 import React from 'react'
+import Header from '../Components/Header'
 
 const SearchPage = () => {
   return (
-    <div>SearchPage</div>
-  )
+    <>
+        <Header/>
+
+    </>
+
+    )
 }
 
 export default SearchPage

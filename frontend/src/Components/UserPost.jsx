@@ -86,7 +86,7 @@ const UserPost = ({likes,commentCount,postTitle,image,userName,avatar}) => {
                             <img src={obito} alt="" className='h-4 w-4 rounded-full  bg-secondary  object-contain' />
 
                         </div>
-                        <div className='w-full flex gap-1 items-center text-secondary '>
+                        <div className='w-full flex gap- items-center text-secondary '>
                             <div className='hover:underline cursor-pointer'>{commentCount} replies</div>
                             <div className='h-1 w-1 rounded-full bg-secondary '></div>
                             <div className='hover:underline cursor-pointer'>{likes}</div>

@@ -9,18 +9,18 @@ import NotificationsPage from './Pages/NotificationsPage'
 import CreateThread from './Components/CreateThread'
 import Home from './Pages/Home'
 import UserPost from './Components/UserPost'
+import AuthPage from './Pages/AuthPage'
 
 function App() {
 
   return (
     <>
       <div className='dark:bg-dark dark:text-light  bg-light text-dark w-full max-h-max min-h-screen '>
-        <Header/>
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/auth' element={<AuthPage />} />
           <Route path='/search' element={<SearchPage />} />
           <Route path='/createthread' element={<CreateThread />} />
-
           <Route path='/notifications' element={<NotificationsPage />} />
           <Route path='/myprofile' element={<UserPage />} />
           <Route path='/:username' element={<UserPage />} />

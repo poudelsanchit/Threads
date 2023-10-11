@@ -5,6 +5,7 @@ import cr7 from '../assets/cr7.jpg'
 import myself from '../assets/myself.jpg'
 import tom from '../assets/tom.png'
 import obito from '../assets/obito.jpg'
+import Header from '../Components/Header'
 const Home = () => {
   useEffect(()=>{
       const html= document.querySelector('html');
@@ -39,6 +40,7 @@ const Home = () => {
   ]
   return (
     <>
+    <Header/>
     {
       posts.map(({image,avatar,userName,postTitle,commentCount,likes})=>(
         <UserPost  image={image} avatar={avatar}  userName={userName} postTitle={postTitle} commentCount={commentCount} likes={likes}   />

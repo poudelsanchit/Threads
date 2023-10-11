@@ -13,7 +13,9 @@ export default {
         'dark' :'#101010',
         'light':'#ffffff',
         'secondary':'#777777',
-        'border':'#323333'
+        'border':'#323333',
+       'placeholder': '#777777' ,
+       'lines':'#323333'
       }
     },
   },
