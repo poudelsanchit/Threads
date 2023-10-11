@@ -3,9 +3,12 @@ import ThreadsLogin from '../assets/threadslogin.png'
 import Threads from '../assets/light-logo.svg'
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { useSetRecoilState } from 'recoil';
+import authScreenAtom from '../atoms/authatom';
 
 
 const SignUpCard = () => {
+    const setAuthScreen= useSetRecoilState (authScreenAtom);
     const [fullname, setFullName] = useState('')
     const [username, setUserName] = useState('')
     const [email, setEmail] = useState('')
@@ -88,7 +91,7 @@ const SignUpCard = () => {
                         </div>
                         <div className='text-secondary text-base font-normal cursor-pointer hover:underline'>Already have an account?</div>
 
-                        <div className='select-none flex w-full border-[0.1px] border-lines text-light rounded-md py-4 justify-center items-center cursor-pointer active:scale-[.97] '>
+                        <div className='select-none flex w-full border-[0.1px] border-lines text-light rounded-md py-4 justify-center items-center cursor-pointer active:scale-[.97] '  onClick={()=>setAuthScreen("login")}>
 
                             <div className='w-4/5 flex justify-center gap-5'>
                                 <img src={Threads} alt="" className='h-8 ' />

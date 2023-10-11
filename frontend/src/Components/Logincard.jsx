@@ -3,17 +3,19 @@ import ThreadsLogin from '../assets/threadslogin.png'
 import Threads from '../assets/light-logo.svg'
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { useSetRecoilState } from 'recoil';
+import authScreenAtom from '../atoms/authatom';
 
 
 const LoginCard = () => {
-    const [fullname, setFullName] = useState('')
-    const [username, setUserName] = useState('')
+    const setAuthScreen=useSetRecoilState(authScreenAtom)
+ 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const handleSignUp = () => {
-        if (fullname == '' && username == '' && email == '' && password == '') {
-            toast('Enter your fullname, username, email address and password.            ', {
+        if (email == '' && password == '') {
+            toast('Please enter email address and password. ', {
                 style: { fontSize: '14px' },
                 position: "bottom-center",
                 autoClose: 1000,
@@ -76,9 +78,9 @@ const LoginCard = () => {
                         </div>
                         <div className='text-secondary text-base font-normal cursor-pointer hover:underline'>Don't have an account?</div>
 
-                        <div className='select-none flex w-full border-[0.1px] border-lines text-light rounded-md py-4 justify-center items-center cursor-pointer active:scale-[.97] '>
+                        <div className='select-none flex w-full border-[0.1px] border-lines text-light rounded-md py-4 justify-center items-center cursor-pointer active:scale-[.97] ' onClick={()=>setAuthScreen("signup")}>
 
-                            <div className='w-4/5 flex justify-center gap-5'>
+                            <div className='w-4/5 flex justify-center gap-5' >
                                 <img src={Threads} alt="" className='h-8 ' />
                                 <div >Sign up</div>
                                 
