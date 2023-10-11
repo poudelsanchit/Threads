@@ -5,32 +5,56 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useSetRecoilState } from 'recoil';
 import authScreenAtom from '../atoms/authatom';
+import userAtom from '../atoms/userAtom';
 
 
 const LoginCard = () => {
     const setAuthScreen=useSetRecoilState(authScreenAtom)
- 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const setUser=useSetRecoilState(userAtom)
 
-    const handleLogin = async() => {
-        if (email == '' && password == '') {
-            toast('Please enter email address and password. ', {
-                style: { fontSize: '14px' },
-                position: "bottom-center",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
-        }
-        else{
-            console.log('first')
-        }
+  
+    const [inputs, setInputs] = useState({
+        username: '',
+        password: '',
 
+    })
+
+    const handleLogin = async () => {
+        try {
+            console.log(inputs)
+             const res = await fetch("/api/users/login", {
+                method: "POST",
+                 headers: {
+                     "Content-Type": "application/json",
+
+                 },
+                body: JSON.stringify(inputs)
+
+             });
+             const data = await res.json();
+             console.log(data)
+
+         if (data.message) {
+                 toast(data.message, {
+                     style: { fontSize: '14px' },
+                     position: "bottom-center",
+                     autoClose: 1000,
+                     hideProgressBar: false,
+                     closeOnClick: true,
+                     pauseOnHover: true,
+                     draggable: true,
+                     progress: undefined,
+                     theme: "dark",
+                 });
+                 return
+             }
+             localStorage.setItem('user-Threads', JSON.stringify(data))
+             setUser(data);
+             
+        } catch (error) {
+            console.log(error)
+
+        }
 
     }
     return (
@@ -60,13 +84,13 @@ const LoginCard = () => {
                         />
                        
                         <div className='w-full z-10 bg-[#1e1e1e]  rounded-md relative'>
-                            <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" className='w-full h-14  text-light z-10 bg-[#1e1e1e] focus:outline-none p-2 pl-4 text-lg placeholder:text-sm placeholder:text-placeholder rounded-md ' placeholder='Email address' />
-                            {email === '' ? <div className='top-0 right-2 absolute text-red-500'>*</div> : null}
+                            <input value={inputs.username} onChange={(e) => setInputs({...inputs,username:e.target.value})} type="email" className='w-full h-14  text-light z-10 bg-[#1e1e1e] focus:outline-none p-2 pl-4 text-lg placeholder:text-sm placeholder:text-placeholder rounded-md ' placeholder='Username' />
+                            {inputs.username === '' ? <div className='top-0 right-2 absolute text-red-500'>*</div> : null}
 
                         </div>
                         <div className='w-full z-10 bg-[#1e1e1e]  rounded-md relative'>
-                            <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className='w-full h-14  text-light z-10 bg-[#1e1e1e] focus:outline-none p-2 pl-4 text-lg placeholder:text-sm placeholder:text-placeholder rounded-md ' placeholder='Password' />
-                            {password == '' ? <div className='top-0 right-2 absolute text-red-500'>*</div> : null}
+                            <input value={inputs.password} onChange={(e) => setInputs({...inputs,password:e.target.value})} type="password" className='w-full h-14  text-light z-10 bg-[#1e1e1e] focus:outline-none p-2 pl-4 text-lg placeholder:text-sm placeholder:text-placeholder rounded-md ' placeholder='Password' />
+                            {inputs.password == '' ? <div className='top-0 right-2 absolute text-red-500'>*</div> : null}
 
                         </div>
                         <div className='select-none flex w-full bg-light text-dark rounded-md py-3 justify-center cursor-pointer active:scale-[.97] ' onClick={handleLogin}>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import LogoDark from '../assets/dark-logo.svg'
 import LogoLight from '../assets/light-logo.svg'
 import { GoHomeFill } from 'react-icons/go'
 import { BsPersonFill, BsPerson } from 'react-icons/bs'
@@ -8,28 +7,67 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { IoCreateOutline } from 'react-icons/io5'
 import { CgMenuRight } from 'react-icons/cg'
 import { NavLink } from 'react-router-dom'
+import { useSetRecoilState } from 'recoil'
+import userAtom from '../atoms/userAtom'
+import useShowToast from '../hooks/useShowToast'
+import { toast } from 'react-toastify'
 const Header = () => {
+    const setUser = useSetRecoilState(userAtom);
+
+    const handleLogout = async () => {
+        try {
+           
+            const res = await fetch('/api/users/logout',{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+            const data = await res.json()
+            console.log(data);
+                if(data.message)
+                {
+                    toast(data.message, {
+                        style: { fontSize: '14px' },
+                        position: "bottom-center",
+                        autoClose: 1000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "dark",
+                    });
+                }
+            localStorage.removeItem('user-Threads')
+            setUser(null)
+
+        } catch (err) {
+            console.log(err)
+
+        }
+
+    }
     const [isActive, setIsActive] = useState(false);
-    const [theme,setTheme]= useState(localStorage.getItem("theme")?localStorage.getItem("theme"):'light');
-    const handleTheme=()=>{
-        if(theme=== 'light')
-        {
+    const [theme, setTheme] = useState(localStorage.getItem("theme") ? localStorage.getItem("theme") : 'light');
+    const handleTheme = () => {
+        if (theme === 'light') {
             setTheme('dark');
         }
-        else{
+        else {
             setTheme('light');
-            const html= document.querySelector('html');
+            const html = document.querySelector('html');
             html.classList.remove('dark');
         }
     }
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         console.log(theme)
-        localStorage.setItem('theme',theme);
-        const localTheme= localStorage.getItem('theme');
+        localStorage.setItem('theme', theme);
+        const localTheme = localStorage.getItem('theme');
         const html = document.querySelector('html');
         html.classList.add(localTheme)
-      },[theme])
+    }, [theme])
     return (
         <div className='h-[74px] w-full  top-0 sticky flex justify-center dark:bg-dark bg-white bg-opacity-[0.999] z-10'>
             <div className='flex justify-evenly h-full sm:w-3/4 w-11/12 items-center'>
@@ -63,17 +101,17 @@ const Header = () => {
 
 
                 </div>
-                <NavLink className={isActive? 'relative text-3xl text-light transition-all cursor-pointer': 'relative text-3xl text-zinc-600 hover:text-light transition-all cursor-pointer'} onClick={() => setIsActive(prev => !prev)}>
+                <NavLink className={isActive ? 'relative text-3xl text-light transition-all cursor-pointer' : 'relative text-3xl text-zinc-600 hover:text-light transition-all cursor-pointer'} onClick={() => setIsActive(prev => !prev)}>
                     <CgMenuRight />
                     {isActive ?
-                    <div className=' h-24 text-light w-40 top-12 right-0 absolute rounded-md bg-[#201f1f] transition-all flex flex-col text-base transition-none'>
+                        <div className=' h-24 text-light w-40 top-12 right-0 absolute rounded-md bg-[#201f1f] transition-all flex flex-col text-base transition-none'>
                             <div className='h-full flex items-center p-3 hover:bg-[#000000] rounded-t-md' onClick={handleTheme}>Switch appearance</div>
-                            <div className='h-full flex items-center p-3 hover:bg-[#000000] rounded-b-md'>Log out</div>
+                            <div className='h-full flex items-center p-3 hover:bg-[#000000] rounded-b-md' onClick={handleLogout}>Log out</div>
 
-                      </div>
-                    : null}
+                        </div>
+                        : null}
                 </NavLink>
-                
+
             </div>
 
         </div>

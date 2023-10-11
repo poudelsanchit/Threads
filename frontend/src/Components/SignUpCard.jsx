@@ -5,10 +5,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useSetRecoilState } from 'recoil';
 import authScreenAtom from '../atoms/authatom';
+import userAtom from '../atoms/userAtom';
 
 
 const SignUpCard = () => {
+
     const setAuthScreen = useSetRecoilState(authScreenAtom);
+    const setUser = useSetRecoilState(userAtom)
     const [inputs, setInputs] = useState({
 
         name: '',
@@ -46,28 +49,8 @@ const SignUpCard = () => {
                 });
                 return
             }
-            localStorage.setItem('user-Threads',JSON.stringify(data ))
-
-
-
-            // if (fullname == '' && username == '' && email == '' && password == '') {
-            //     toast('Enter your fullname, username, email address and password.            ', {
-            //         style: { fontSize: '14px' },
-            //         position: "bottom-center",
-            //         autoClose: 1000,
-            //         hideProgressBar: false,
-            //         closeOnClick: true,
-            //         pauseOnHover: true,
-            //         draggable: true,
-            //         progress: undefined,
-            //         theme: "dark",
-            //     });
-            // }
-            // else{
-            //     console.log('hello')
-            // }
-
-
+            localStorage.setItem('user-Threads', JSON.stringify(data))
+            setUser(data);
 
         } catch (error) {
             console.log(error)
