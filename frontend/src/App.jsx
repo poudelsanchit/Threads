@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Route, BrowserRouter, Routes } from 'react-router-dom'
-import Login from './Pages/Login'
 import UserPage from './Pages/UserPage'
 import PostPage from './Pages/PostPage'
 import Header from './Components/Header'

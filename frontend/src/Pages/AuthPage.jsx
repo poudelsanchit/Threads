@@ -1,10 +1,12 @@
 import React from 'react'
-import SignupCard from '../Components/SignUpCard'
+import LoginCard from '../Components/Logincard'
+import SignUpCard from '../Components/SignUpCard'
 
 const AuthPage = () => {
     return (
         <>
-        <SignupCard/>
+        <LoginCard/>
+
         </>
     )
 }
