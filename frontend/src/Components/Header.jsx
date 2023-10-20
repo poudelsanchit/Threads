@@ -7,17 +7,19 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import { IoCreateOutline } from 'react-icons/io5'
 import { CgMenuRight } from 'react-icons/cg'
 import { NavLink } from 'react-router-dom'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import userAtom from '../atoms/userAtom'
 import useShowToast from '../hooks/useShowToast'
 import { toast } from 'react-toastify'
+import Model from './UpdateProfile'
 const Header = () => {
     const setUser = useSetRecoilState(userAtom);
+	const currentUser = useRecoilValue(userAtom);
 
     const handleLogout = async () => {
         try {
-           
-            const res = await fetch('/api/users/logout',{
+
+            const res = await fetch('/api/users/logout', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -25,20 +27,19 @@ const Header = () => {
             });
             const data = await res.json()
             console.log(data);
-                if(data.message)
-                {
-                    toast(data.message, {
-                        style: { fontSize: '14px' },
-                        position: "bottom-center",
-                        autoClose: 1000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "dark",
-                    });
-                }
+            if (data.message) {
+                toast(data.message, {
+                    style: { fontSize: '14px' },
+                    position: "bottom-center",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }
             localStorage.removeItem('user-Threads')
             setUser(null)
 
@@ -62,14 +63,13 @@ const Header = () => {
     }
 
     useEffect(() => {
-        console.log(theme)
         localStorage.setItem('theme', theme);
         const localTheme = localStorage.getItem('theme');
         const html = document.querySelector('html');
         html.classList.add(localTheme)
     }, [theme])
     return (
-        <div className='h-[74px] w-full  top-0 sticky flex justify-center dark:bg-dark bg-white bg-opacity-[0.999] z-10'>
+        <div className='h-[74px] w-full  top-0 sticky flex justify-center dark:bg-dark/95 backdrop-blur-sm bg-white/30  z-10'>
             <div className='flex justify-evenly h-full sm:w-3/4 w-11/12 items-center'>
                 <div className='flex items-start'>
                     <img src={LogoLight} alt="" className='h-8' />
@@ -90,7 +90,7 @@ const Header = () => {
                         <NavLink to={'/notifications'} className={({ isActive }) => isActive ? 'text-light hover:bg-zinc-700 p-3 rounded-md transition-all duration-500' : ' text-gray-600 hover:bg-zinc-700 p-3 rounded-md transition-all duration-500'}>
                             <AiOutlineHeart />
                         </NavLink>
-                        <NavLink to={'/myprofile'} className={({ isActive }) => isActive ? 'text-light hover:bg-zinc-700 p-3 rounded-md transition-all duration-500' : ' text-gray-600 hover:bg-zinc-700 p-3 rounded-md transition-all duration-500'}>
+                        <NavLink to={currentUser? `/${currentUser.username}`: '/'} className={({ isActive }) => isActive ? 'text-light hover:bg-zinc-700 p-3 rounded-md transition-all duration-500' : ' text-gray-600 hover:bg-zinc-700 p-3 rounded-md transition-all duration-500'}>
                             <BsPerson />
                         </NavLink>
 
@@ -113,7 +113,7 @@ const Header = () => {
                 </NavLink>
 
             </div>
-
+          
         </div>
     )
 }

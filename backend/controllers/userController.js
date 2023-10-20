@@ -1,23 +1,33 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs"
 import generateTokenAndCookie from "../utils/helpers/generateTokenAndSetCookie.js";
-
+import { v2 as cloudinary } from 'cloudinary'
+import mongoose from "mongoose";
 
 
 const getUserProfile = async (req, res) => {
-    const { username } = req.params;
+    // We will fetch user profile either with username or userId
+    // query is either username or userId
+    const { query } = req.params;
+
     try {
+        let user;
 
-        const user = await User.findOne({ username }).select("-password").select("-updatedAt");
+        // query is userId
+        if (mongoose.Types.ObjectId.isValid(query)) {
+            user = await User.findOne({ _id: query }).select("-password").select("-updatedAt");
+        } else {
+            // query is username
+            user = await User.findOne({ username: query }).select("-password").select("-updatedAt");
+        }
 
-        if (!user) return res.status(404).json({ message: "User not found" });
+        if (!user) return res.status(404).json({ error: "User not found" });
 
         res.status(200).json(user);
     } catch (err) {
         res.status(500).json({ error: err.message });
-        console.log("Error in Follow/Unfollow user: ", err.message);
+        console.log("Error in getUserProfile: ", err.message);
     }
-
 }
 const signupUser = async (req, res) => {
     try {
@@ -40,6 +50,8 @@ const signupUser = async (req, res) => {
                 name: newUser.name,
                 email: newUser.email,
                 username: newUser.username,
+                bio: newUser.bio,
+                profilePic: newUser.profilePic
             })
         }
         else {
@@ -64,6 +76,8 @@ const loginUser = async (req, res) => {
             name: user.name,
             email: user.email,
             username: user.username,
+            bio: user.bio,
+            profilePic: user.profilePic
 
         })
     } catch (err) {
@@ -83,6 +97,7 @@ const logoutUser = (req, res) => {
 };
 const followUnfollowUser = async (req, res) => {
     try {
+        let user;
         const { id } = req.params;
         const userToModify = await User.findById(id);
         const currentUser = await User.findById(req.user._id);
@@ -93,20 +108,24 @@ const followUnfollowUser = async (req, res) => {
         if (isFollowing) {
             // unfollow user
 
-            await User.findByIdAndUpdate(id, { $pull: { followers: req.user._id } });
-            await User.findByIdAndUpdate(req.user._id, { $pull: { following: id } });
-            res.status(200).json({ message: "User Unfollowed successfully" })
+             await User.findByIdAndUpdate(id, { $pull: { followers: req.user._id } });
+             await User.findByIdAndUpdate(req.user._id, { $pull: { following: id } });
+             res.status(200).json({ message: "User unfollowed successfully" });
+         
 
 
         }
         else {
-            await User.findByIdAndUpdate(id, { $push: { followers: req.user._id } })
-            await User.findByIdAndUpdate(req.user._id, { $push: { following: id } })
-            res.status(200).json({ message: "User followed successfully " })
+             await User.findByIdAndUpdate(id, { $push: { followers: req.user._id } })
+             await User.findByIdAndUpdate(req.user._id, { $push: { following: id } })
+             res.status(200).json({ message: "User followed successfully" });
+             user = await User.findOne({ _id: id }).select("-password").select("-updatedAt");
+             res.status(200).json(user)
 
 
 
         }
+     
 
 
 
@@ -132,11 +151,12 @@ const updateUser = async (req, res) => {
         }
         if (profilePic) {
             if (user.profilePic) {
+                //destroy the profile pic 
                 await cloudinary.uploader.destroy(user.profilePic.split("/").pop().split(".")[0]);
             }
-
             const uploadedResponse = await cloudinary.uploader.upload(profilePic);
             profilePic = uploadedResponse.secure_url;
+
         }
         user.name = name || user.name;
         user.email = email || user.email;
@@ -144,7 +164,8 @@ const updateUser = async (req, res) => {
         user.profilePic = profilePic || user.profilePic;
         user.bio = bio || user.bio;
         user = await user.save();
-        res.status(200).json({ message: "Profile updated successfully", user })
+        user.password = user.password;
+        res.status(200).json(user)
 
 
     } catch (err) {

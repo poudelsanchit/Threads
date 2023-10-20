@@ -15,7 +15,8 @@ export default {
         'secondary':'#777777',
         'border':'#323333',
        'placeholder': '#777777' ,
-       'lines':'#323333'
+       'lines':'#323333',
+       'pulse':'#201f1f'
       }
     },
   },

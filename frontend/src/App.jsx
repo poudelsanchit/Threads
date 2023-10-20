@@ -11,10 +11,10 @@ import UserPost from './Components/UserPost'
 import AuthPage from './Pages/AuthPage'
 import { useRecoilValue } from 'recoil'
 import userAtom from './atoms/userAtom'
+import MyProfile from './Pages/UserPage'
 
 function App() {
   const user= useRecoilValue(userAtom);
-  console.log(user)
 
   return (
     <>
@@ -22,12 +22,16 @@ function App() {
         <Routes>
           <Route path='/' element={user? <Home/> : <Navigate to='/auth'/>} />
           <Route path='/auth' element={!user? <AuthPage />:  <Navigate to='/'/>} />
+
+      
+          <Route path='/update' element={user? <MyProfile /> : <Navigate to='/'/>} />
+          <Route path='/:username' element={user? <UserPage />: <Navigate to='/auth'/>} />
+          <Route path='/:username/post/:pid' element={<PostPage />} />
+
+
           <Route path='/search' element={<SearchPage />} />
           <Route path='/createthread' element={<CreateThread />} />
           <Route path='/notifications' element={<NotificationsPage />} />
-          <Route path='/myprofile' element={<UserPage />} />
-          <Route path='/:username' element={<UserPage />} />
-          <Route path='/:username/post/:pid' element={<PostPage />} />
         </Routes>
       </div>
     </>
